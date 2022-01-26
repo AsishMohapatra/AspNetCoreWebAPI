@@ -78,7 +78,7 @@ public class ConsumesController : ControllerBase
 ## Swagger Open API Specification ##
 
 	1. Swagger is from SmartBear tooling for OpenAPI Specification.
-	2. OpenAPI specification (openapi.json) or can be in YAML files
+	2. OpenAPI specification (openapi.json)- 
 		- Document that describes the capabilities of your API. 
 		- Document is based on the XML and attribute annotations within the controllers and models. 
 		- It's the core part of the OpenAPI flow and is used to drive tooling such as SwaggerUI. By default, it's named openapi.json.
@@ -89,18 +89,11 @@ public class ConsumesController : ControllerBase
 	4. Default location of swagger OAS document is  https://localhost:<port>/swagger/v1/swagger.json
 	5. Default Url for Swagger UI is https://localhost:<port>/swagger
 	6. Swagger endpoints for the json file should be a relative path using ./ 
-			- services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("***SmartPrinter***", //*** API Name ***
-                    new Microsoft.OpenApi.Models.OpenApiInfo()
-                    { Title = "Printer Frame API", Version = "v1" });
-            });
-	7. app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/***SmartPrinter***/swagger.json", "Smart Printer API"); //Adds a swagger json endpoint
-                    options.RoutePrefix = string.Empty;
-                });
+			- app.UseSwaggerUI(options =>
+				{
+					options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+					options.RoutePrefix = string.Empty;
+				});
 	7. How to add the XML comments to Swagger UI.
 			- GenerateDocumentationFile =true in project file.
 			- With this setting all the missing XML comments will be displayed as warning.
@@ -112,6 +105,13 @@ public class ConsumesController : ControllerBase
 			- To Suppress warning on specific class #pragma can be used as below.
 					#pragma warning disable CS1591
 					#pragma warning restore CS1591
+			- Below configuration using SwaggerGenOptions can add XML document to swagger.
+				// using System.Reflection;
+						var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+						options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+			- Use Summary tag for the action description.
+			- Use Remarks to create action method documentation example.
+			- ///<response code="204"> No Content</response>
 			- Below configuration using SwaggerGenOptions can add XML document to swagger.
 				// using System.Reflection;
 						var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
