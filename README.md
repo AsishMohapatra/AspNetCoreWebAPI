@@ -127,3 +127,21 @@ public class ConsumesController : ControllerBase
 			- Identifies which content-types api handles using the attribute at controller level or action level.
 					[Produces("application/json")]
 					[Consumes("application/json")]
+
+# Controller Action Return Types
+	1. The simplest action returns a primitive or complex data type (for example, string or a custom object type) as there is no parameter validations are needed
+			 [HttpGet("GetAllAvailablePizzas")]
+				public List<Pizza> GetAvailablePizzas()
+				{
+					return PizzaService.GetAll();
+				}
+	2.When multiple return types are possible, it's common to mix an ActionResult return type with the primitive or complex return type. 
+		Either IActionResult or ActionResult<T> 
+	3.BUffering of the result.
+			- Buffers the result before writting. (Use IEnumerable<T>)
+			- Async buffering using IAsyncEnumerable <T>
+	4. The IActionResult return type is appropriate when multiple ActionResult return types are possible in an action. The ActionResult types represent various HTTP status codes.
+	5. **ActionResult vs IActionResult **
+			The [ProducesResponseType] attribute's Type property can be excluded. For example, [ProducesResponseType(200, Type = typeof(Product))] is simplified to [ProducesResponseType(200)]. The action's expected return type is instead inferred from the T in ActionResult<T>.
+Implicit cast operators support the conversion of both T and ActionResult to ActionResult<T>. T converts to ObjectResult, which means return new ObjectResult(T); is simplified to return T;.
+	

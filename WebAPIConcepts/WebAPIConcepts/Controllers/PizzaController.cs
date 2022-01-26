@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPIConcepts.Models;
 
 namespace WebAPIConcepts.Controllers
 {
@@ -32,6 +33,11 @@ namespace WebAPIConcepts.Controllers
             return Ok(PizzaService.GetAll());
         }
 
+        [HttpGet("GetAllAvailablePizzas")]
+        public List<Pizza> GetAvailablePizzas()
+        {
+            return PizzaService.GetAll();
+        }
 
         /// <summary>
         /// Deletes a Pizza From Pizza Store
