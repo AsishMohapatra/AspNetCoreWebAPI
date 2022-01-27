@@ -27,6 +27,14 @@ namespace ToDoApi.Controllers
             return await _context.ToDoItems.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("thex")]
+        public async Task<ActionResult<IEnumerable<ToDoItem>>> GetToDoItems2()
+        {
+            throw new NotImplementedException();
+                return await _context.ToDoItems.ToListAsync();
+        }
+
         // GET: api/ToDoItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ToDoItem>> GetToDoItem(long id)
